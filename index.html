@@ -2,9 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nuestra Historia 💖</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     background:black;
@@ -24,8 +30,38 @@ video{
 }
 
 .zoom-final{
-    transform:scale(1.25);
-    filter:brightness(0.5);
+    transform:scale(1.12);
+    filter:brightness(0.75);
+}
+
+/* BOTONES */
+.control-video{
+    position:fixed;
+    top:15px;
+    right:15px;
+    z-index:999;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:16px;
+    backdrop-filter:blur(5px);
+}
+
+.reiniciar{
+    position:fixed;
+    top:15px;
+    left:15px;
+    z-index:999;
+    background:#ff4d6d;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:16px;
 }
 
 /* OVERLAY */
@@ -33,7 +69,7 @@ video{
     position:fixed;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.4);
+    background:rgba(0,0,0,0.35);
 }
 
 /* INTRO */
@@ -46,6 +82,8 @@ video{
     align-items:center;
     flex-direction:column;
     z-index:5;
+    padding:20px;
+    text-align:center;
 }
 
 .intro h1{
@@ -61,6 +99,7 @@ video{
     border:none;
     border-radius:40px;
     cursor:pointer;
+    font-size:18px;
 }
 
 /* FRASES */
@@ -68,11 +107,13 @@ video{
     position:absolute;
     width:100%;
     top:50%;
-    transform:translateY(-50%);
+    left:50%;
+    transform:translate(-50%,-50%);
     text-align:center;
     font-size:65px;
     opacity:0;
     transition:1s;
+    padding:20px;
 }
 
 /* CHAT */
@@ -94,15 +135,18 @@ video{
     margin:8px 0;
     max-width:60%;
     animation:fadeIn 0.5s;
+    font-size:20px;
+    word-wrap:break-word;
 }
 
-/* BOTONES */
+/* BOTONES OPCIONES */
 .opciones{
     display:none;
     position:fixed;
     bottom:20px;
     width:100%;
     text-align:center;
+    z-index:100;
 }
 
 .si{
@@ -112,6 +156,7 @@ video{
     border:none;
     border-radius:40px;
     animation:latido 1s infinite;
+    font-size:22px;
 }
 
 .no{
@@ -120,6 +165,7 @@ video{
     color:white;
     padding:15px;
     border-radius:30px;
+    font-size:18px;
 }
 
 /* FINAL */
@@ -132,12 +178,39 @@ video{
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    text-align:center;
+    padding:20px;
+    z-index:500;
+    overflow:hidden;
+}
+
+.foto-final h1{
+    font-size:45px;
+    z-index:5;
 }
 
 .foto-final img{
     max-width:70%;
     border:10px solid white;
-    border-radius:10px;
+    border-radius:20px;
+    box-shadow:0 0 35px rgba(255,255,255,0.4);
+    z-index:5;
+}
+
+/* CORAZONES */
+.corazon{
+    position:fixed;
+    bottom:-20px;
+    font-size:25px;
+    animation:subir 5s linear infinite;
+}
+
+.corazon-final{
+    position:absolute;
+    color:#ff4d6d;
+    font-size:25px;
+    animation:subirFinal 6s linear infinite;
+    opacity:0.8;
 }
 
 /* ANIMACIONES */
@@ -151,22 +224,28 @@ to{opacity:1;}
 }
 
 @keyframes subir{
-to{transform:translateY(-110vh);opacity:0;}
+to{
+    transform:translateY(-110vh);
+    opacity:0;
+}
 }
 
-.corazon{
-    position:fixed;
-    bottom:-20px;
-    font-size:25px;
-    animation:subir 5s linear infinite;
-}
+@keyframes subirFinal{
 
-@keyframes shake{
-0%{transform:translate(2px,2px);}
-25%{transform:translate(-2px,-2px);}
-50%{transform:translate(2px,-2px);}
-75%{transform:translate(-2px,2px);}
-100%{transform:translate(0,0);}
+    0%{
+        transform:translateY(0);
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
+
 }
 
 /* FLASHBACK */
@@ -176,186 +255,431 @@ to{transform:translateY(-110vh);opacity:0;}
     border-radius:10px;
     animation:fadeIn 1s;
 }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .intro h1{
+        font-size:38px;
+    }
+
+    .frase{
+        font-size:30px;
+        padding:20px;
+        line-height:1.4;
+    }
+
+    .chat{
+        bottom:100px;
+        padding:15px;
+        max-height:55vh;
+    }
+
+    .burbuja{
+        max-width:92%;
+        font-size:17px;
+        padding:10px 14px;
+    }
+
+    .si{
+        font-size:18px;
+        padding:15px 28px;
+    }
+
+    .no{
+        font-size:15px;
+        padding:12px 18px;
+    }
+
+    .foto-final h1{
+        font-size:25px;
+    }
+
+    .foto-final img{
+        max-width:92%;
+    }
+
+    .flash{
+        width:110px;
+    }
+
+    .control-video,
+    .reiniciar{
+        font-size:13px;
+        padding:10px 12px;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- VIDEO -->
 <video id="video" autoplay muted loop>
-<source src="videoplayback.mp4">
+<source src="c:/Users/Flavia/OneDrive/Desktop/PAGINA R/videoplayback.mp4">
 </video>
+
+<!-- BOTONES -->
+<button class="control-video" onclick="toggleMedia()">
+⏸ Pausar Todo
+</button>
+
+<button class="reiniciar" onclick="reiniciarHistoria()">
+🔄 Reiniciar
+</button>
 
 <div class="overlay"></div>
 
+<!-- INTRO -->
 <div class="intro" id="intro">
 <h1>🎬 Nuestra Historia</h1>
-<button onclick="start()">comenzar 💖</button>
+<button onclick="start()">Comenzar 💖</button>
 </div>
 
+<!-- AUDIO -->
 <audio id="audio">
-<source src="Danny Ocean - Me Rehúso (Official Audio) [aDCcLQto5BM].mp3">
+<source src="c:/Users/Flavia/OneDrive/Desktop/PAGINA R/Angel.mp3">
 </audio>
 
+<!-- FRASES -->
 <div class="frase" id="frase"></div>
+
+<!-- CHAT -->
 <div class="chat" id="chat"></div>
 
+<!-- OPCIONES -->
 <div class="opciones" id="opciones">
 <button class="si" onclick="aceptar()">Sí 💍</button>
 <button class="no" id="no">No 😈</button>
 </div>
 
+<!-- FINAL -->
 <div class="foto-final" id="fotoFinal">
+
 <h1>💖 Nuestra historia comienza Rousss 💖</h1>
-<img src="WhatsApp Image 2026-05-03 at 7.48.08 PM.jpeg">
+
+<img src="c:/Users/Flavia/OneDrive/Desktop/PAGINA R/WhatsApp Image 2026-05-03 at 7.48.08 PM.jpeg">
+
 </div>
 
 <script>
 
-/* FRASES NIVEL NOVELA DIOS */
+/* FRASES */
+
 const frases=[
+
 "No fue planeado...",
 "No estaba buscando a nadie...",
 "Pero llegaste tú...",
-"Y sin darme cuenta...",
-"Te volviste mi pensamiento favorito...",
-"Mi lugar seguro...",
-"Mi paz en días difíciles...",
-"Y ahora...",
-"No hay un solo día...",
-"En el que no estés en mi mente..."
+"Y desde ese momento...",
+"Todo empezó a sentirse diferente...",
+"Más bonito...",
+"Más especial...",
+"Más nuestro...",
+"Mi cachetona hermosa...",
+"Mi blanquita preciosa...",
+"Te convertiste en mi pensamiento favorito...",
+"Mi tranquilidad...",
+"Mi felicidad...",
+"Y ahora no imagino un solo día sin ti..."
+
 ];
 
 let i=0;
 
 function start(){
+
     document.getElementById("intro").style.display="none";
+
     let audio=document.getElementById("audio");
+
     audio.volume=0.2;
+
     audio.play();
+
     mostrarFrases();
+
 }
 
 function mostrarFrases(){
+
     let f=document.getElementById("frase");
 
     if(i<frases.length){
+
         f.innerText=frases[i];
+
         f.style.opacity=1;
 
         setTimeout(()=>{
+
             f.style.opacity=0;
+
             i++;
+
             setTimeout(mostrarFrases,1300);
+
         },2600);
 
     }else{
+
         f.style.display="none";
+
         iniciarChat();
+
     }
+
 }
 
 /* FLASHBACK */
+
 function flash(){
+
     let img=document.createElement("img");
+
     img.src="c:/Users/Flavia/OneDrive/Desktop/PAGINA R/foto1.jpg";
+
     img.className="flash";
+
     img.style.left=Math.random()*80+"%";
+
     img.style.top=Math.random()*60+"%";
+
     document.body.appendChild(img);
+
     setTimeout(()=>img.remove(),3000);
+
 }
 
-/* CHAT NIVEL DIOS */
+/* CHAT */
+
 function iniciarChat(){
+
     let chat=document.getElementById("chat");
+
     chat.style.display="block";
 
     let mensajes=[
-        "Hola mi cachetona...",
-        "Hay algo que llevo tiempo guardando...",
-        "Y creo que ya no quiero seguir callándolo...",
-        "Porque no es algo pequeño...",
-        "Es algo que creció poco a poco...",
-        "Sin hacer ruido...",
-        "Pero haciéndose cada vez más fuerte...",
-        "Hasta que se volvió imposible ignorarlo...",
-        "Y es que contigo...",
-        "Todo se siente diferente...",
+
+        "Hola mi cachetona hermosa...",
+        "Hay algo que quiero decirte desde hace mucho tiempo...",
+        "Y cada día que pasa...",
+        "Estoy más seguro de todo lo que siento por ti...",
+        "Porque llegaste a mi vida cuando menos lo esperaba...",
+        "Y poco a poco te convertiste en alguien imposible de olvidar...",
+        "Mi lugar favorito...",
+        "Mi tranquilidad...",
+        "Mi felicidad en los días difíciles...",
+        "Mi blanquita preciosa...",
+        "No sé cómo explicarlo...",
+        "Pero contigo todo se siente diferente...",
         "Más bonito...",
         "Más real...",
-        "Más... nuestro...",
-        "💖 Me haces feliz...",
-        "De una forma que no sabía que existía...",
-        "💖 Y no quiero perder eso...",
-        "💖 Ni quiero imaginar una vida sin ti...",
-        "💍 ¿Quieres ser mi novia?"
+        "Más especial...",
+        "Y cada momento contigo...",
+        "Se queda guardado en mi corazón...",
+        "Porque no quiero perderte nunca...",
+        "Ni quiero imaginar mi vida sin ti...",
+        "Y hoy solo quiero preguntarte algo...",
+        "💍 Mi cachetona...",
+        "💖 ¿Quieres ser mi novia? 💖"
+
     ];
 
     let j=0;
 
     function enviar(){
+
         if(j<mensajes.length){
 
             if(j==5 || j==10) flash();
 
             let div=document.createElement("div");
+
             div.className="burbuja";
+
             div.innerText=mensajes[j];
+
             chat.appendChild(div);
 
-            let voz=new SpeechSynthesisUtterance(mensajes[j]);
+            chat.scrollTop=chat.scrollHeight;
+
+            /* VOZ */
+
+            let voz = new SpeechSynthesisUtterance(mensajes[j]);
+
+            voz.lang = "es-ES";
+            voz.rate = 0.82;
+            voz.pitch = 0.7;
+            voz.volume = 1;
+
             speechSynthesis.speak(voz);
 
             if(mensajes[j].includes("novia")){
-                document.getElementById("video").classList.add("zoom-final");
-                document.body.style.animation="shake 0.5s";
+
+                document.getElementById("video")
+                .classList.add("zoom-final");
+
+                /* YA NO HAY EFECTO ROJO */
+
                 let audio=document.getElementById("audio");
+
                 audio.volume=1;
 
                 setTimeout(()=>{
-                    document.getElementById("opciones").style.display="block";
+
+                    document.getElementById("opciones")
+                    .style.display="block";
+
                 },1200);
 
                 return;
+
             }
 
             j++;
+
             setTimeout(enviar,2300);
 
         }
+
     }
 
     enviar();
+
 }
 
-/* BOTÓN NO */
+/* BOTON NO */
+
 let noBtn=document.getElementById("no");
 
 function moverNo(){
-    let x=Math.random()*(window.innerWidth-120);
-    let y=Math.random()*(window.innerHeight-120);
 
-    noBtn.style.left=x+"px";
-    noBtn.style.top=y+"px";
+    let anchoPantalla = window.innerWidth;
+    let altoPantalla = window.innerHeight;
+
+    let anchoBoton = noBtn.offsetWidth;
+    let altoBoton = noBtn.offsetHeight;
+
+    let margen = 20;
+
+    let x = Math.random() *
+    (anchoPantalla - anchoBoton - margen);
+
+    let y = Math.random() *
+    (altoPantalla - altoBoton - 120);
+
+    if(x < margen){
+        x = margen;
+    }
+
+    if(y < margen){
+        y = margen;
+    }
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
 }
 
 noBtn.addEventListener("mouseover",moverNo);
 noBtn.addEventListener("click",moverNo);
 
 /* FINAL */
+
 function aceptar(){
-    document.getElementById("fotoFinal").style.display="flex";
+
+    document.getElementById("fotoFinal")
+    .style.display="flex";
 
     for(let i=0;i<120;i++){
+
         setTimeout(()=>{
+
             let c=document.createElement("div");
+
             c.className="corazon";
+
             c.innerHTML="💖";
+
             c.style.left=Math.random()*100+"vw";
+
             document.body.appendChild(c);
+
             setTimeout(()=>c.remove(),5000);
+
         },i*25);
+
     }
+
+    /* CORAZONES FOTO FINAL */
+
+    setInterval(()=>{
+
+        let corazon=document.createElement("div");
+
+        corazon.className="corazon-final";
+
+        corazon.innerHTML="💖";
+
+        corazon.style.left=Math.random()*100+"vw";
+
+        corazon.style.bottom="-20px";
+
+        corazon.style.fontSize=
+        (Math.random()*30+15)+"px";
+
+        document.getElementById("fotoFinal")
+        .appendChild(corazon);
+
+        setTimeout(()=>{
+
+            corazon.remove();
+
+        },6000);
+
+    },250);
+
+}
+
+/* PAUSAR */
+
+function toggleMedia(){
+
+    let video=document.getElementById("video");
+
+    let audio=document.getElementById("audio");
+
+    let btn=document.querySelector(".control-video");
+
+    if(video.paused){
+
+        video.play();
+
+        audio.play();
+
+        btn.innerHTML="⏸ Pausar Todo";
+
+    }else{
+
+        video.pause();
+
+        audio.pause();
+
+        btn.innerHTML="▶ Reproducir Todo";
+
+    }
+
+}
+
+/* REINICIAR */
+
+function reiniciarHistoria(){
+
+    location.reload();
+
 }
 
 </script>
