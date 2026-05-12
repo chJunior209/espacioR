@@ -8,306 +8,485 @@
 <style>
 
 *{
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    background:black;
-    color:white;
-    font-family:'Segoe UI', sans-serif;
-    overflow:hidden;
+background:black;
+overflow:hidden;
+font-family:'Segoe UI',sans-serif;
+color:white;
 }
 
-/* VIDEO */
+/* VIDEO FONDO */
+
+#video{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-10;
+
+backface-visibility:hidden;
+transform:translateZ(0);
+
+will-change:transform,opacity;
+
+opacity:1;
+
+transition:
+opacity .2s linear,
+transform 6s ease,
+filter 2s ease;
+
+filter:brightness(.88);
+}
+
 video{
-    position:fixed;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
-    transition:transform 6s ease, filter 2s;
-}
-
-.zoom-final{
-    transform:scale(1.12);
-    filter:brightness(0.75);
-}
-
-/* BOTONES */
-.control-video{
-    position:fixed;
-    top:15px;
-    right:15px;
-    z-index:999;
-    background:rgba(0,0,0,0.6);
-    color:white;
-    border:none;
-    padding:12px 18px;
-    border-radius:30px;
-    cursor:pointer;
-    font-size:16px;
-    backdrop-filter:blur(5px);
-}
-
-.reiniciar{
-    position:fixed;
-    top:15px;
-    left:15px;
-    z-index:999;
-    background:#ff4d6d;
-    color:white;
-    border:none;
-    padding:12px 18px;
-    border-radius:30px;
-    cursor:pointer;
-    font-size:16px;
+background:black;
 }
 
 /* OVERLAY */
+
 .overlay{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.35);
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.42);
+z-index:-9;
+}
+
+/* BOTONES */
+
+.control-video{
+position:fixed;
+top:15px;
+right:15px;
+z-index:999;
+
+background:rgba(0,0,0,.65);
+color:white;
+
+border:none;
+
+padding:12px 18px;
+
+border-radius:35px;
+
+cursor:pointer;
+
+font-size:15px;
+
+backdrop-filter:blur(10px);
+}
+
+.reiniciar{
+position:fixed;
+top:15px;
+left:15px;
+z-index:999;
+
+background:#ff4d6d;
+color:white;
+
+border:none;
+
+padding:12px 18px;
+
+border-radius:35px;
+
+cursor:pointer;
+
+font-size:15px;
+}
+
+/* BARRA */
+
+.barra-global{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+z-index:9999;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(10px);
+
+padding:10px 15px;
+}
+
+#seekBar{
+width:100%;
+cursor:pointer;
+accent-color:#ff4d6d;
 }
 
 /* INTRO */
+
 .intro{
-    position:absolute;
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:5;
-    padding:20px;
-    text-align:center;
+position:fixed;
+inset:0;
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+
+text-align:center;
+
+padding:20px;
+
+z-index:10;
 }
 
 .intro h1{
-    font-size:65px;
-    animation:fadeIn 2s ease;
+font-size:70px;
+text-shadow:0 0 25px rgba(255,255,255,.5);
+animation:fade 2s;
+}
+
+.intro p{
+margin-top:12px;
+font-size:22px;
+opacity:.9;
 }
 
 .intro button{
-    margin-top:20px;
-    background:#ff4d6d;
-    color:white;
-    padding:15px 40px;
-    border:none;
-    border-radius:40px;
-    cursor:pointer;
-    font-size:18px;
+margin-top:25px;
+
+background:#ff4d6d;
+color:white;
+
+border:none;
+
+padding:16px 45px;
+
+border-radius:40px;
+
+font-size:22px;
+
+cursor:pointer;
+
+box-shadow:0 0 25px rgba(255,77,109,.6);
 }
 
 /* FRASES */
+
 .frase{
-    position:absolute;
-    width:100%;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    font-size:65px;
-    opacity:0;
-    transition:1s;
-    padding:20px;
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+width:90%;
+
+text-align:center;
+
+font-size:58px;
+
+line-height:1.5;
+
+opacity:0;
+
+transition:1s;
+
+text-shadow:0 0 20px rgba(0,0,0,.95);
 }
 
 /* CHAT */
+
 .chat{
-    display:none;
-    position:absolute;
-    bottom:120px;
-    width:100%;
-    max-height:60vh;
-    overflow-y:auto;
-    padding:20px;
+position:fixed;
+
+bottom:120px;
+
+width:100%;
+
+padding:18px;
+
+max-height:55vh;
+
+overflow-y:auto;
+
+display:none;
 }
 
 .burbuja{
-    background:white;
-    color:black;
-    padding:12px;
-    border-radius:15px;
-    margin:8px 0;
-    max-width:60%;
-    animation:fadeIn 0.5s;
-    font-size:20px;
-    word-wrap:break-word;
+width:max-content;
+
+max-width:75%;
+
+background:white;
+
+color:black;
+
+padding:14px 18px;
+
+border-radius:18px;
+
+margin:10px 0;
+
+font-size:20px;
+
+animation:fade .4s;
 }
 
-/* BOTONES OPCIONES */
+/* OPCIONES */
+
 .opciones{
-    display:none;
-    position:fixed;
-    bottom:20px;
-    width:100%;
-    text-align:center;
-    z-index:100;
+position:fixed;
+
+bottom:70px;
+
+width:100%;
+
+text-align:center;
+
+display:none;
+
+z-index:50;
 }
 
 .si{
-    background:#ff4d6d;
-    color:white;
-    padding:20px 50px;
-    border:none;
-    border-radius:40px;
-    animation:latido 1s infinite;
-    font-size:22px;
+background:#ff4d6d;
+color:white;
+
+border:none;
+
+padding:18px 55px;
+
+border-radius:40px;
+
+font-size:22px;
+
+cursor:pointer;
+
+animation:latido 1s infinite;
 }
 
 .no{
-    position:absolute;
-    background:#333;
-    color:white;
-    padding:15px;
-    border-radius:30px;
-    font-size:18px;
+position:fixed;
+
+left:65%;
+top:78%;
+
+background:#2c2c2c;
+color:white;
+
+border:none;
+
+padding:15px 20px;
+
+border-radius:35px;
+
+font-size:18px;
+
+cursor:pointer;
+
+transition:
+left .25s ease,
+top .25s ease;
 }
 
 /* FINAL */
+
 .foto-final{
-    display:none;
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:black;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    padding:20px;
-    z-index:500;
-    overflow:hidden;
+position:fixed;
+inset:0;
+
+background:black;
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:200;
+
+padding:15px;
 }
 
-.foto-final h1{
-    font-size:45px;
-    z-index:5;
+/* VIDEO FINAL */
+
+.contenedor-video{
+position:relative;
+
+width:95%;
+max-width:1000px;
 }
 
-.foto-final img{
-    max-width:70%;
-    border:10px solid white;
-    border-radius:20px;
-    box-shadow:0 0 35px rgba(255,255,255,0.4);
-    z-index:5;
+#videoFinal{
+width:100%;
+
+max-height:85vh;
+
+object-fit:contain;
+
+border-radius:20px;
+
+border:5px solid white;
+
+background:black;
+}
+
+/* TAPA SELLO MEJORADA */
+
+.tapa-sello{
+position:absolute;
+
+bottom:0;
+right:0;
+
+width:320px;
+height:120px;
+
+background:
+radial-gradient(
+circle at bottom right,
+rgba(0,0,0,1) 20%,
+rgba(0,0,0,.98) 45%,
+rgba(255,77,109,.92) 100%
+);
+
+backdrop-filter:blur(12px);
+
+border-top-left-radius:45px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:20px;
+font-weight:bold;
+
+color:white;
+
+box-shadow:
+0 0 40px rgba(255,77,109,.9);
+
+overflow:hidden;
+}
+
+/* CAPA EXTRA PARA TAPAR MEJOR */
+
+.tapa-sello::before{
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+linear-gradient(
+to top left,
+rgba(0,0,0,.98),
+rgba(0,0,0,.6)
+);
+
+}
+
+/* TEXTO */
+
+.tapa-sello span{
+position:relative;
+z-index:2;
 }
 
 /* CORAZONES */
-.corazon{
-    position:fixed;
-    bottom:-20px;
-    font-size:25px;
-    animation:subir 5s linear infinite;
-}
 
-.corazon-final{
-    position:absolute;
-    color:#ff4d6d;
-    font-size:25px;
-    animation:subirFinal 6s linear infinite;
-    opacity:0.8;
+.corazon{
+position:fixed;
+
+bottom:-20px;
+
+font-size:24px;
+
+animation:subir 5s linear forwards;
 }
 
 /* ANIMACIONES */
-@keyframes fadeIn{
+
+@keyframes fade{
 from{opacity:0;}
 to{opacity:1;}
 }
 
 @keyframes latido{
-50%{transform:scale(1.15);}
+50%{
+transform:scale(1.12);
+}
 }
 
 @keyframes subir{
 to{
-    transform:translateY(-110vh);
-    opacity:0;
+transform:translateY(-110vh);
+opacity:0;
 }
 }
 
-@keyframes subirFinal{
+/* CELULAR */
 
-    0%{
-        transform:translateY(0);
-        opacity:0;
-    }
-
-    20%{
-        opacity:1;
-    }
-
-    100%{
-        transform:translateY(-120vh);
-        opacity:0;
-    }
-
-}
-
-/* FLASHBACK */
-.flash{
-    position:fixed;
-    width:200px;
-    border-radius:10px;
-    animation:fadeIn 1s;
-}
-
-/* RESPONSIVE */
 @media(max-width:768px){
 
-    .intro h1{
-        font-size:38px;
-    }
+.intro h1{
+font-size:42px;
+}
 
-    .frase{
-        font-size:30px;
-        padding:20px;
-        line-height:1.4;
-    }
+.intro p{
+font-size:16px;
+}
 
-    .chat{
-        bottom:100px;
-        padding:15px;
-        max-height:55vh;
-    }
+.intro button{
+font-size:18px;
+padding:15px 35px;
+}
 
-    .burbuja{
-        max-width:92%;
-        font-size:17px;
-        padding:10px 14px;
-    }
+.frase{
+font-size:30px;
+line-height:1.6;
+}
 
-    .si{
-        font-size:18px;
-        padding:15px 28px;
-    }
+.chat{
+bottom:130px;
+padding:12px;
+max-height:50vh;
+}
 
-    .no{
-        font-size:15px;
-        padding:12px 18px;
-    }
+.burbuja{
+max-width:95%;
+font-size:16px;
+padding:12px 15px;
+}
 
-    .foto-final h1{
-        font-size:25px;
-    }
+.si{
+font-size:18px;
+padding:15px 35px;
+}
 
-    .foto-final img{
-        max-width:92%;
-    }
+.no{
+font-size:15px;
+left:58%;
+top:80%;
+}
 
-    .flash{
-        width:110px;
-    }
+#videoFinal{
+max-height:60vh;
+object-fit:contain;
+}
 
-    .control-video,
-    .reiniciar{
-        font-size:13px;
-        padding:10px 12px;
-    }
+/* TAPA CELULAR */
+
+.tapa-sello{
+width:210px;
+height:85px;
+font-size:12px;
+border-top-left-radius:30px;
+}
 
 }
 
@@ -317,11 +496,15 @@ to{
 <body>
 
 <!-- VIDEO -->
-<video id="video" autoplay muted loop>
-<source src="videoplayback.mp4">
+
+<video id="video" autoplay muted loop playsinline preload="auto">
+<source src="videoplayback.mp4" type="video/mp4">
 </video>
 
+<div class="overlay"></div>
+
 <!-- BOTONES -->
+
 <button class="control-video" onclick="toggleMedia()">
 ⏸ Pausar Todo
 </button>
@@ -330,37 +513,80 @@ to{
 🔄 Reiniciar
 </button>
 
-<div class="overlay"></div>
-
 <!-- INTRO -->
+
 <div class="intro" id="intro">
+
 <h1>🎬 Nuestra Historia</h1>
-<button onclick="start()">Comenzar 💖</button>
+
+<p>
+Hay personas que dejan huellas imposibles de borrar...
+</p>
+
+<button onclick="start()">
+Comenzar 💖
+</button>
+
 </div>
 
 <!-- AUDIO -->
+
 <audio id="audio">
-<source src="Angel.mp3">
+<source src="Angel.mp3" type="audio/mp3">
 </audio>
 
 <!-- FRASES -->
+
 <div class="frase" id="frase"></div>
 
 <!-- CHAT -->
+
 <div class="chat" id="chat"></div>
 
 <!-- OPCIONES -->
+
 <div class="opciones" id="opciones">
-<button class="si" onclick="aceptar()">Sí 💍</button>
-<button class="no" id="no">No 😈</button>
+
+<button class="si" onclick="aceptar()">
+Sí 💍
+</button>
+
+<button class="no" id="no">
+No 😈
+</button>
+
 </div>
 
 <!-- FINAL -->
+
 <div class="foto-final" id="fotoFinal">
 
-<h1>💖 Nuestra historia comienza Rousss 💖</h1>
+<div class="contenedor-video">
 
-<img src="c:/Users/Flavia/OneDrive/Desktop/PAGINA R/WhatsApp Image 2026-05-03 at 7.48.08 PM.jpeg">
+<video id="videoFinal" autoplay loop playsinline controls>
+<source src="Generación de Video a partir de Foto.mp4" type="video/mp4">
+</video>
+
+<!-- TAPA SELLO -->
+
+<div class="tapa-sello">
+<span>💖 Together Forever 💖</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- BARRA -->
+
+<div class="barra-global">
+
+<input
+type="range"
+id="seekBar"
+value="0"
+min="0"
+max="100">
 
 </div>
 
@@ -370,20 +596,14 @@ to{
 
 const frases=[
 
-"No fue planeado...",
-"No estaba buscando a nadie...",
-"Pero llegaste tú...",
-"Y desde ese momento...",
-"Todo empezó a sentirse diferente...",
-"Más bonito...",
-"Más especial...",
-"Más nuestro...",
-"Mi cachetona hermosa...",
-"Mi blanquita preciosa...",
-"Te convertiste en mi pensamiento favorito...",
+"Últimamente he pensado mucho en nosotros...",
+"En cómo dos personas pueden quererse...",
+"Y aun así tener diferencias...",
+"Pero aun así...",
+"Sigues siendo alguien demasiado importante para mí...",
 "Mi tranquilidad...",
-"Mi felicidad...",
-"Y ahora no imagino un solo día sin ti..."
+"Mi pensamiento más constante...",
+"Y una persona imposible de olvidar..."
 
 ];
 
@@ -391,65 +611,46 @@ let i=0;
 
 function start(){
 
-    document.getElementById("intro").style.display="none";
+document.getElementById("intro")
+.style.display="none";
 
-    let audio=document.getElementById("audio");
+let audio=document.getElementById("audio");
 
-    audio.volume=0.2;
+audio.volume=0.25;
 
-    audio.play();
+audio.play();
 
-    mostrarFrases();
+mostrarFrases();
 
 }
 
 function mostrarFrases(){
 
-    let f=document.getElementById("frase");
+let f=document.getElementById("frase");
 
-    if(i<frases.length){
+if(i<frases.length){
 
-        f.innerText=frases[i];
+f.innerText=frases[i];
 
-        f.style.opacity=1;
+f.style.opacity=1;
 
-        setTimeout(()=>{
+setTimeout(()=>{
 
-            f.style.opacity=0;
+f.style.opacity=0;
 
-            i++;
+i++;
 
-            setTimeout(mostrarFrases,1300);
+setTimeout(mostrarFrases,1000);
 
-        },2600);
+},3000);
 
-    }else{
+}else{
 
-        f.style.display="none";
+f.style.display="none";
 
-        iniciarChat();
-
-    }
+iniciarChat();
 
 }
-
-/* FLASHBACK */
-
-function flash(){
-
-    let img=document.createElement("img");
-
-    img.src="c:/Users/Flavia/OneDrive/Desktop/PAGINA R/foto1.jpg";
-
-    img.className="flash";
-
-    img.style.left=Math.random()*80+"%";
-
-    img.style.top=Math.random()*60+"%";
-
-    document.body.appendChild(img);
-
-    setTimeout(()=>img.remove(),3000);
 
 }
 
@@ -457,220 +658,204 @@ function flash(){
 
 function iniciarChat(){
 
-    let chat=document.getElementById("chat");
+let chat=document.getElementById("chat");
 
-    chat.style.display="block";
+chat.style.display="block";
 
-    let mensajes=[
+let mensajes=[
 
-        "Hola mi cachetona hermosa...",
-        "Hay algo que quiero decirte desde hace mucho tiempo...",
-        "Y cada día que pasa...",
-        "Estoy más seguro de todo lo que siento por ti...",
-        "Porque llegaste a mi vida cuando menos lo esperaba...",
-        "Y poco a poco te convertiste en alguien imposible de olvidar...",
-        "Mi lugar favorito...",
-        "Mi tranquilidad...",
-        "Mi felicidad en los días difíciles...",
-        "Mi blanquita preciosa...",
-        "No sé cómo explicarlo...",
-        "Pero contigo todo se siente diferente...",
-        "Más bonito...",
-        "Más real...",
-        "Más especial...",
-        "Y cada momento contigo...",
-        "Se queda guardado en mi corazón...",
-        "Porque no quiero perderte nunca...",
-        "Ni quiero imaginar mi vida sin ti...",
-        "Y hoy solo quiero preguntarte algo...",
-        "💍 Mi cachetona...",
-        "💖 ¿Quieres ser mi novia? 💖"
+"Hola mi cachetona hermosa...",
+"He pensado mucho en nosotros estos días...",
+"Porque tú eres alguien demasiado especial para mí...",
+"💖 ¿Quieres ser mi novia? 💖"
 
-    ];
+];
 
-    let j=0;
+let j=0;
 
-    function enviar(){
+function enviar(){
 
-        if(j<mensajes.length){
+if(j<mensajes.length){
 
-            if(j==5 || j==10) flash();
+let div=document.createElement("div");
 
-            let div=document.createElement("div");
+div.className="burbuja";
 
-            div.className="burbuja";
+div.innerText=mensajes[j];
 
-            div.innerText=mensajes[j];
+chat.appendChild(div);
 
-            chat.appendChild(div);
+chat.scrollTop=chat.scrollHeight;
 
-            chat.scrollTop=chat.scrollHeight;
+let voz=
+new SpeechSynthesisUtterance(mensajes[j]);
 
-            /* VOZ */
+voz.lang="es-ES";
+voz.rate=.90;
+voz.pitch=.95;
 
-            let voz = new SpeechSynthesisUtterance(mensajes[j]);
+setTimeout(()=>{
 
-            voz.lang = "es-ES";
-            voz.rate = 0.82;
-            voz.pitch = 0.7;
-            voz.volume = 1;
+window.speechSynthesis.cancel();
 
-            speechSynthesis.speak(voz);
+speechSynthesis.speak(voz);
 
-            if(mensajes[j].includes("novia")){
+},80);
 
-                document.getElementById("video")
-                .classList.add("zoom-final");
+if(mensajes[j].includes("novia")){
 
-                /* YA NO HAY EFECTO ROJO */
+setTimeout(()=>{
 
-                let audio=document.getElementById("audio");
+document.getElementById("opciones")
+.style.display="block";
 
-                audio.volume=1;
+},1000);
 
-                setTimeout(()=>{
+return;
 
-                    document.getElementById("opciones")
-                    .style.display="block";
+}
 
-                },1200);
+j++;
 
-                return;
+setTimeout(enviar,3000);
 
-            }
+}
 
-            j++;
+}
 
-            setTimeout(enviar,2300);
-
-        }
-
-    }
-
-    enviar();
+enviar();
 
 }
 
 /* BOTON NO */
 
-let noBtn=document.getElementById("no");
+let noBtn=
+document.getElementById("no");
 
 function moverNo(){
 
-    let anchoPantalla = window.innerWidth;
-    let altoPantalla = window.innerHeight;
+let x=Math.random()*
+(window.innerWidth-140);
 
-    let anchoBoton = noBtn.offsetWidth;
-    let altoBoton = noBtn.offsetHeight;
+let y=Math.random()*
+(window.innerHeight-180);
 
-    let margen = 20;
+if(x<20)x=20;
+if(y<20)y=20;
 
-    let x = Math.random() *
-    (anchoPantalla - anchoBoton - margen);
-
-    let y = Math.random() *
-    (altoPantalla - altoBoton - 120);
-
-    if(x < margen){
-        x = margen;
-    }
-
-    if(y < margen){
-        y = margen;
-    }
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
 
 }
 
-noBtn.addEventListener("mouseover",moverNo);
-noBtn.addEventListener("click",moverNo);
+noBtn.addEventListener(
+"mouseenter",
+moverNo
+);
+
+noBtn.addEventListener(
+"touchstart",
+moverNo
+);
 
 /* FINAL */
 
 function aceptar(){
 
-    document.getElementById("fotoFinal")
-    .style.display="flex";
+document.getElementById("fotoFinal")
+.style.display="flex";
 
-    for(let i=0;i<120;i++){
+let finalVideo=
+document.getElementById("videoFinal");
 
-        setTimeout(()=>{
+finalVideo.currentTime=0;
 
-            let c=document.createElement("div");
+finalVideo.play();
 
-            c.className="corazon";
+for(let i=0;i<160;i++){
 
-            c.innerHTML="💖";
+setTimeout(()=>{
 
-            c.style.left=Math.random()*100+"vw";
+let c=
+document.createElement("div");
 
-            document.body.appendChild(c);
+c.className="corazon";
 
-            setTimeout(()=>c.remove(),5000);
+c.innerHTML="💖";
 
-        },i*25);
+c.style.left=
+Math.random()*100+"vw";
 
-    }
+document.body.appendChild(c);
 
-    /* CORAZONES FOTO FINAL */
+setTimeout(()=>{
 
-    setInterval(()=>{
+c.remove();
 
-        let corazon=document.createElement("div");
+},5000);
 
-        corazon.className="corazon-final";
-
-        corazon.innerHTML="💖";
-
-        corazon.style.left=Math.random()*100+"vw";
-
-        corazon.style.bottom="-20px";
-
-        corazon.style.fontSize=
-        (Math.random()*30+15)+"px";
-
-        document.getElementById("fotoFinal")
-        .appendChild(corazon);
-
-        setTimeout(()=>{
-
-            corazon.remove();
-
-        },6000);
-
-    },250);
+},i*25);
 
 }
+
+}
+
+/* BARRA */
+
+const seekBar=
+document.getElementById("seekBar");
+
+const fondoVideo=
+document.getElementById("video");
+
+fondoVideo.addEventListener("timeupdate",()=>{
+
+seekBar.value=
+(fondoVideo.currentTime/
+fondoVideo.duration)*100;
+
+});
+
+seekBar.addEventListener("input",()=>{
+
+fondoVideo.currentTime=
+(seekBar.value*
+fondoVideo.duration)/100;
+
+});
 
 /* PAUSAR */
 
 function toggleMedia(){
 
-    let video=document.getElementById("video");
+let video=
+document.getElementById("video");
 
-    let audio=document.getElementById("audio");
+let audio=
+document.getElementById("audio");
 
-    let btn=document.querySelector(".control-video");
+let btn=
+document.querySelector(".control-video");
 
-    if(video.paused){
+if(video.paused){
 
-        video.play();
+video.play();
 
-        audio.play();
+audio.play();
 
-        btn.innerHTML="⏸ Pausar Todo";
+btn.innerHTML=
+"⏸ Pausar Todo";
 
-    }else{
+}else{
 
-        video.pause();
+video.pause();
 
-        audio.pause();
+audio.pause();
 
-        btn.innerHTML="▶ Reproducir Todo";
+btn.innerHTML=
+"▶ Reproducir Todo";
 
-    }
+}
 
 }
 
@@ -678,7 +863,7 @@ function toggleMedia(){
 
 function reiniciarHistoria(){
 
-    location.reload();
+location.reload();
 
 }
 
